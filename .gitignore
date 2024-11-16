@@ -1,0 +1,12 @@
+bin/
+obj/
+.vscode/
+.idea/
+*.user
+*.userosscache
+*.suo
+TestResults/
+.DS_Store
+*.log
+Properties/
+*.http
