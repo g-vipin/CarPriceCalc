@@ -1,7 +1,7 @@
 ﻿using CarPriceApi.Controllers;
+using CarPriceApi.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
 namespace CarPriceApi.Tests
 {
@@ -25,6 +25,11 @@ namespace CarPriceApi.Tests
                 CarType = CarType.Suv,
                 ExShowroomPrice = 1420000
             };
+
+            var response = new CarPriceResponse
+            {
+                BaseCarPrice = 1200000
+            };
             
             var mockCarPrice = new Mock<ICarPrice>();
             mockCarPrice.Setup(cp => cp.CalculateBasePrice(It.IsAny<decimal>())).Returns(1200000);
@@ -34,8 +39,8 @@ namespace CarPriceApi.Tests
             var result = _controller.CalculateBasePrice(request);
 
             // Assert
-            var actionResult = Assert.IsType<OkObjectResult>(result);
-            Assert.Equal(1200000, actionResult.Value);
+            var actionResult = Assert.IsType<OkObjectResult>(response);
+            Assert.Equal(response.BaseCarPrice, actionResult.Value);
         }
 
         [Fact]

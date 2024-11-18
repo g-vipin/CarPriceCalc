@@ -1,3 +1,5 @@
+namespace CarPriceApi.Services
+{
 public class CarPriceFactory
 {
     private readonly ILogger _logger;
@@ -25,4 +27,5 @@ public class CarPriceFactory
         }
     }
 
+}
 }

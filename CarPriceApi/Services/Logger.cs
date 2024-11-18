@@ -1,3 +1,5 @@
+namespace CarPriceApi.Services
+{
 public sealed class Logger : ILogger
 {
     private readonly string _logfilePath;
@@ -37,3 +39,4 @@ public sealed class Logger : ILogger
     }
 }
 
+}

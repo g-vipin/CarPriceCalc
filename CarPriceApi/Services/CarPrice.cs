@@ -1,3 +1,5 @@
+namespace CarPriceApi.Services
+{
 public abstract class CarPrice : ICarPrice
 {
 
@@ -48,4 +50,5 @@ public class Suv : CarPrice
     protected override int GetGst() => 28;
 
     protected override int GetCess() => 22;
+}
 }

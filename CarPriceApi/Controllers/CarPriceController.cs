@@ -1,3 +1,4 @@
+using CarPriceApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarPriceApi.Controllers
@@ -14,15 +15,15 @@ namespace CarPriceApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<decimal> CalculateBasePrice([FromBody] CarPriceRequest request)
+        public ActionResult<CarPriceResponse> CalculateBasePrice([FromBody] CarPriceRequest request)
         {
             try
             {
                 if (Enum.IsDefined(typeof(CarType), request.CarType))
                 {
                     var carPrice = _carPriceFactory.GetBasePrice(request.CarType);
-                    var basePrice = carPrice.CalculateBasePrice(request.ExShowroomPrice);
-                    return Ok(basePrice);
+                    var basePrice = carPrice.CalculateBasePrice(request.ExShowroomPrice);                    
+                    return Ok(new CarPriceResponse{ BaseCarPrice = basePrice});
                 }
                 else
                 {
@@ -34,11 +35,5 @@ namespace CarPriceApi.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-    }
-
-    public class CarPriceRequest
-    {
-        public CarType CarType { get; set; }
-        public decimal ExShowroomPrice { get; set; }
     }
 }
