@@ -15,7 +15,7 @@ public class CarPriceFactory
         };
 
     }
-    public ICarPrice GetBasePrice(CarType carType)
+    public virtual ICarPrice GetPriceObject(CarType carType)
     {
         if(_carPriceMap.ContainsKey(carType))
         {

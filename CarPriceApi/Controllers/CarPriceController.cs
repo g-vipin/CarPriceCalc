@@ -21,8 +21,8 @@ namespace CarPriceApi.Controllers
             {
                 if (Enum.IsDefined(typeof(CarType), request.CarType))
                 {
-                    var carPrice = _carPriceFactory.GetBasePrice(request.CarType);
-                    var basePrice = carPrice.CalculateBasePrice(request.ExShowroomPrice);                    
+                    var carPriceObj = _carPriceFactory.GetPriceObject(request.CarType);
+                    var basePrice = carPriceObj.CalculateBasePrice(request.ExShowroomPrice);                    
                     return Ok(new CarPriceResponse{ BaseCarPrice = basePrice});
                 }
                 else

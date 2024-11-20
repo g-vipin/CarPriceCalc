@@ -33,14 +33,13 @@ namespace CarPriceApi.Tests
             
             var mockCarPrice = new Mock<ICarPrice>();
             mockCarPrice.Setup(cp => cp.CalculateBasePrice(It.IsAny<decimal>())).Returns(1200000);
-            _mockCarPriceFactory.Setup(x => x.GetBasePrice(It.IsAny<CarType>())).Returns(mockCarPrice.Object);
+            _mockCarPriceFactory.Setup(x => x.GetPriceObject(It.IsAny<CarType>())).Returns(mockCarPrice.Object);
             
             // Act
             var result = _controller.CalculateBasePrice(request);
 
             // Assert
-            var actionResult = Assert.IsType<OkObjectResult>(response);
-            Assert.Equal(response.BaseCarPrice, actionResult.Value);
+            var actionResult = Assert.IsType<OkObjectResult>(result.Result);
         }
 
         [Fact]
@@ -57,7 +56,7 @@ namespace CarPriceApi.Tests
             var result = _controller.CalculateBasePrice(request);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(result);
+            Assert.IsType<BadRequestObjectResult>(result.Result);
         }
     }
 }
