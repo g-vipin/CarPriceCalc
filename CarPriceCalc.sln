@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPriceApi", "CarPriceApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPriceApi.Tests", "CarPriceApi.Tests\CarPriceApi.Tests.csproj", "{1F03225B-80F4-457B-A0C5-D3CB1F8B93B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarPriceConsole", "CarPriceConsole\CarPriceConsole.csproj", "{072B8030-CBB0-4B4F-8D6F-A02CCA6FBDA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{1F03225B-80F4-457B-A0C5-D3CB1F8B93B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F03225B-80F4-457B-A0C5-D3CB1F8B93B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F03225B-80F4-457B-A0C5-D3CB1F8B93B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{072B8030-CBB0-4B4F-8D6F-A02CCA6FBDA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{072B8030-CBB0-4B4F-8D6F-A02CCA6FBDA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{072B8030-CBB0-4B4F-8D6F-A02CCA6FBDA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{072B8030-CBB0-4B4F-8D6F-A02CCA6FBDA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

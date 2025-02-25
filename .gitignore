@@ -10,3 +10,8 @@ TestResults/
 *.log
 Properties/
 *.http
+*.tmp
+wwwroot
+!wwwroot/css/site.css
+!wwwroot/js/site.js
+*.map
