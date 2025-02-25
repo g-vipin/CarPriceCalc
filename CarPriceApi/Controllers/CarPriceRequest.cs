@@ -1,16 +1,21 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using CarPriceApi.Services;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
 namespace CarPriceApi.Controllers
 {
 public class CarPriceRequest
-    {
-        [JsonProperty("car_type")]
-        [JsonConverter(typeof(StringEnumConverter))]
-        public CarType CarType { get; set; }
-        
-        [JsonProperty("exshowroom_price")]
-        public decimal ExShowroomPrice { get; set; }
-    }
+{
+    [JsonPropertyName("car_type")]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [Required]
+    [Description("The type of car (e.g., Sedan, SUV).")]
+    public CarType CarType { get; set; }
+    
+    [JsonPropertyName("exshowroom_price")]
+    [Required]
+    [Range(1, double.MaxValue, ErrorMessage = "Ex-showroom price must be greater than 0.")]
+    public decimal ExShowroomPrice { get; set; }
+}
 }
