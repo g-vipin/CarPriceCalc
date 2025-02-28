@@ -1,0 +1,23 @@
+services:
+  carpriceapi:
+    build:
+      context: .
+      dockerfile: CarPriceApi/Dockerfile
+    ports:
+      - "7035:7035"  
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:7035
+    restart: always
+
+  carpriceconsole:
+    build:
+      context: .
+      dockerfile: CarPriceConsole/Dockerfile
+    ports:
+      - "7036:7036" 
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production  
+      - ASPNETCORE_URLS=http://+:7036   
+    command: ["dotnet", "CarPriceConsole.dll"]
+    restart: always

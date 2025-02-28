@@ -1,6 +1,4 @@
 using CarPriceApi.Services;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<CarPriceApi.Services.ILogger>(provider => new Logger("log_CarPriceCalc.log"));
 builder.Services.AddTransient<CarPriceFactory>();
 builder.Services.AddEndpointsApiExplorer();
+builder.Configuration.AddJsonFile("appsettings.api.json", optional: true, reloadOnChange: true)
+.AddJsonFile("appsettings.api.Development.json", optional: true, reloadOnChange: true);
 builder.Services.AddSwaggerGen(c =>
 {
   c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
