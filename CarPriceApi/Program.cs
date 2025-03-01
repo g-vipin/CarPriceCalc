@@ -39,7 +39,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+  options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+  options.RoutePrefix = string.Empty; // Serve Swagger UI at the application root.
+});
 
 app.UseHttpsRedirection();
 app.MapControllers();  // Map controllers to routes
