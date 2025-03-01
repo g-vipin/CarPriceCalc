@@ -14,9 +14,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: SetUp .Net
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.0
+          dotnet-version: 9.0.x
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -26,4 +26,3 @@ jobs:
 
       - name: Publish
         run: dotnet publish ./CarPriceConsole.sln --configuration Release --no-build 
-      
