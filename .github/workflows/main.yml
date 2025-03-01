@@ -1,0 +1,29 @@
+name: publish 
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main 
+
+jobs:
+  publish: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: application/checkout@v4
+
+      - name: SetUp .Net
+        uses: application/checkout@v4
+        with:
+          dotnet-version: 9.0.0
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+      - name: Build 
+        run: dotnet build ./CarPriceConsole.sln --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./CarPriceConsole.sln --configuration Release --no-build 
+      
