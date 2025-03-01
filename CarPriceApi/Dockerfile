@@ -2,7 +2,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 7035
 ENV ASPNETCORE_URLS "http://+:7035"
-LABEL run="docker run -d -p 7035:7035 gvipin/carpriceapi"
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
