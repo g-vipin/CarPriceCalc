@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: application/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: SetUp .Net
-        uses: application/checkout@v4
+        uses: actions/checkout@v4
         with:
           dotnet-version: 9.0.0
 
