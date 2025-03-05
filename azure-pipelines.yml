@@ -13,10 +13,29 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
 - task: DotNetCoreCLI@2
   inputs:
-    azureSubscription: 'Azure subscription 1(833aa8ba-a911-475f-be96-928887111289)'
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'config'
+- task: DotNetCoreCLI@2
+  inputs:
     command: 'build'
     projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/CarPriceApi.Tests.csproj'
+    testRunTitle: 'ApiUnitTest'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)'  
+    artifactName: 'drop'
+    publishLocation: 'Container'
