@@ -15,3 +15,8 @@ variables:
 steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    azureSubscription: 'Azure subscription 1(833aa8ba-a911-475f-be96-928887111289)'
+    command: 'build'
+    projects: '**/*.csproj'
