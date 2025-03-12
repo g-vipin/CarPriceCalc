@@ -1,6 +1,18 @@
 version: 0.2
 
 phases:
+  install:
+    commands:
+      - echo "Updating package repository"
+      - apt-get update -y
+      - echo "Installing dependencies for .NET SDK"
+      - apt-get install -y wget tar gzip
+      - echo "Downloading and installing .NET SDK"
+      - wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
+      - chmod +x dotnet-install.sh
+      - ./dotnet-install.sh --channel 9.0
+      - export PATH="$PATH:/root/.dotnet"
+      - dotnet --version 
   pre_build:
     commands:
       - echo "Restore phase"
