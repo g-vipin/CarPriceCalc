@@ -4,15 +4,35 @@ phases:
   install:
     commands:
       - echo "Updating package repository"
-      - apt-get update -y
+      - sudo yum update -y
+
+      - echo "Installing prerequisites for .NET SDK 9.0"
+      - sudo yum install -y wget tar jq
+
+      - echo "Adding Microsoft package repository and downloading .NET SDK 9.0"
+      - SDK_URL="https://download.visualstudio.microsoft.com/download/pr/82a7fc96-b53b-4af4-ac3a-ef0a6c9325d5/84e522c31482538cddf696d03c5b20af/dotnet-sdk-9.0.201-linux-x64.tar.gz"
+      - wget $SDK_URL -O dotnet-sdk.tar.gz
+
       - echo "Installing .NET SDK 9.0"
-      - sudo add-apt-repository ppa:dotnet/backports
-      - sudo apt-get install -y dotnet-sdk-9.0        
-      - echo "Install the runtime"
-      - sudo apt-get install -y aspnetcore-runtime-9.0          
+      - mkdir -p /root/dotnet && tar zxf dotnet-sdk.tar.gz -C /root/dotnet
+      - export DOTNET_ROOT=/root/dotnet
+      - export PATH=$DOTNET_ROOT:$PATH
+
+      - echo "Checking for global.json and updating it to use .NET SDK 9.0"
+      - if [ -f global.json ]; then
+          jq '.sdk.version = "9.0.201"' global.json > temp.json && mv temp.json global.json;
+        fi
+
+      - echo "Cleaning up installation files"
+      - rm -f dotnet-sdk.tar.gz
+
+      - echo "Verifying installed .NET SDKs"
+      - dotnet --list-sdks
+
       - echo "Verifying installed .NET version"
       - dotnet --version
-  pre_build:  
+
+  pre_build:
     commands:
       - echo "Restore phase"
       - dotnet restore
