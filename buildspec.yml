@@ -10,9 +10,11 @@ phases:
       - echo "Downloading and installing .NET SDK"
       - wget https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.sh
       - chmod +x dotnet-install.sh
-      - ./dotnet-install.sh --channel 9.0
-      - export PATH="$PATH:/root/.dotnet"
-      - dotnet --version 
+      - ./dotnet-install.sh --channel 9.0 --version latest
+      - export DOTNET_ROOT=$HOME/.dotnet
+      - export PATH=$PATH:$HOME/.dotnet
+      - echo "Verifying installed .NET version"
+      - dotnet --version
   pre_build:
     commands:
       - echo "Restore phase"
