@@ -1,7 +1,7 @@
 version: 0.2
 
 phases:
-  restore:
+  pre_build:
     commands:
       - echo "Restore phase"
       - dotnet restore
@@ -9,14 +9,13 @@ phases:
     commands:
       - echo "Build phase"
       - dotnet build -c Release --no-restore
-  test: 
-    commands:
       - echo "Test phase"
       - dotnet test **/CarPriceApi.Tests.csproj --no-build
   post_build:
     commands:
       - echo "Post build phase"
       - dotnet publish -c Release -o ./publish --no-build
+
 artifacts:
   files:
     - '**/*'
