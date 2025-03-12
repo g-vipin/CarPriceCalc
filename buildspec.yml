@@ -7,11 +7,9 @@ phases:
       - apt-get update -y
       - echo "Installing .NET SDK 9.0"
       - sudo add-apt-repository ppa:dotnet/backports
-      - apt-get update && \
-          apt-get install -y dotnet-sdk-9.0
+      - sudo apt-get install -y dotnet-sdk-9.0        
       - echo "Install the runtime"
-      - apt-get update && \
-          apt-get install -y aspnetcore-runtime-9.0
+      - sudo apt-get install -y aspnetcore-runtime-9.0          
       - echo "Verifying installed .NET version"
       - dotnet --version
   pre_build:  
