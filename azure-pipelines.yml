@@ -11,6 +11,7 @@ pool:
 
 variables:
   buildConfiguration: 'Release'
+  VSTEST_CONNECTION_TIMEOUT: 180
 
 stages:
   - stage: Build_and_Publish
