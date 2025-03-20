@@ -55,25 +55,21 @@ stages:
     displayName: Deploy stage
     dependsOn: Build_and_Publish
     jobs:
-    - deployment: Deploy
+    - job: Deploy
       displayName: Deploy
       pool:
         name: MySelfHostedPool
-      strategy:
-        runOnce:
-          deploy:
-            steps:
-            - task: DownloadBuildArtifacts@0
-              inputs:
-                buildType: 'current'
-                downloadType: 'single'
-                artifactName: 'drop'
-                downloadPath: '$(System.ArtifactsDirectory)'
-            - task: AzureRmWebAppDeployment@4
-              inputs:
-                ConnectionType: 'AzureRM'
-                azureSubscription: 'Azure subscription 1(833aa8ba-a911-475f-be96-928887111289)'
-                appType: 'webAppLinux'
-                WebAppName: 'car-price-api'
-                packageForLinux: '$(System.ArtifactsDirectory)/drop/CarPriceApi.zip' 
-                RuntimeStack: 'DOTNETCORE:9.0'
+      steps:
+       - task: DownloadBuildArtifacts@0
+         inputs:
+           buildType: 'current'
+           downloadType: 'single'
+           artifactName: 'drop'
+           downloadPath: '$(System.ArtifactsDirectory)'
+       - task: AzureRmWebAppDeployment@4
+         inputs:
+           ConnectionType: 'AzureRM'
+           azureSubscription: 'AzureDeploymentConnection'
+           appType: 'webAppLinux'
+           WebAppName: 'car-price-api'
+           packageForLinux: '$(System.ArtifactsDirectory)/drop/CarPriceApi.zip'
