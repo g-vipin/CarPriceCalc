@@ -3,26 +3,27 @@ version: 0.2
 phases:
   install:
     commands:
-      - command -v curl || apt-get update && apt-get install -y curl
       - echo "Installing the latest .NET 9.0 from the 9.0 channel"
-      - curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
+      - wget https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
       - chmod +x dotnet-install.sh
       - ./dotnet-install.sh --channel 9.0 --install-dir "$HOME/.dotnet"
-      - "$HOME/.dotnet/dotnet --version"
+      - export PATH="$HOME/.dotnet:$PATH"
+      - export DOTNET_ROOT="$HOME/.dotnet"
+      - dotnet --version
   pre_build:
     commands:
       - echo "Restore phase"
-      - "$HOME/.dotnet/dotnet restore"
+      - dotnet restore"
   build:
     commands:
       - echo "Build phase"
-      - "$HOME/.dotnet/dotnet build -c Release"
+      - dotnet build -c Release --no-restore
       - echo "Test phase"
-      - "$HOME/.dotnet/dotnet test **/CarPriceApi.Tests.csproj --no-build"
+      - dotnet test **/CarPriceApi.Tests.csproj --no-build
   post_build:
     commands:
       - echo "Post build phase"
-      - "$HOME/.dotnet/dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build"
+      - dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build
 artifacts:
   files:
     - '**/*'
