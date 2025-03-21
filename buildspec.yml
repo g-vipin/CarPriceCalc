@@ -8,25 +8,21 @@ phases:
       - curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
       - chmod +x dotnet-install.sh
       - ./dotnet-install.sh --channel 9.0 --install-dir "$HOME/.dotnet"
-      - export PATH="$HOME/.dotnet:$PATH"
-      - dotnet --version  
+      - "$HOME/.dotnet/dotnet --version"
   pre_build:
     commands:
-      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Restore phase"
-      - dotnet restore
+      - "$HOME/.dotnet/dotnet restore"
   build:
     commands:
-      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Build phase"
-      - dotnet build -c Release
+      - "$HOME/.dotnet/dotnet build -c Release"
       - echo "Test phase"
-      - dotnet test **/CarPriceApi.Tests.csproj --no-build
+      - "$HOME/.dotnet/dotnet test **/CarPriceApi.Tests.csproj --no-build"
   post_build:
     commands:
-      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Post build phase"
-      - dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build
+      - "$HOME/.dotnet/dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build"
 artifacts:
   files:
     - '**/*'
