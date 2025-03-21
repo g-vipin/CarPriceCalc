@@ -2,34 +2,9 @@ version: 0.2
 
 phases:
   install:
-    commands:
-      - echo "Checking preinstalled .NET SDKs"
-      - dotnet --list-sdks || echo "No preinstalled SDKs found"
-      - dotnet --version || echo "No default version found"
-
-      - echo "Searching for global.json in the build environment"
-      - find / -name "global.json" -exec cat {} \; 2>/dev/null || echo "No global.json found"
-
-      - echo "Updating package repository"
-      - sudo yum update -y
-
-      - echo "Installing prerequisites for .NET SDK 9.0"
-      - sudo yum install -y wget tar jq
-
-      - echo "Downloading .NET SDK 9.0"
-      - wget "https://download.visualstudio.microsoft.com/download/pr/82a7fc96-b53b-4af4-ac3a-ef0a6c9325d5/84e522c31482538cddf696d03c5b20af/dotnet-sdk-9.0.201-linux-x64.tar.gz"
-
-      - echo "Installing .NET SDK 9.0"
-      - mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-9.0.201-linux-x64.tar.gz -C $HOME/dotnet
-      - export DOTNET_ROOT=$HOME/dotnet
-      - export PATH=$HOME/dotnet:$PATH 
-      - export DOTNET_ROLL_FORWARD=LatestMajor 
-      - echo "DOTNET_ROOT=$HOME/dotnet" >> ~/.bashrc
-      - echo "PATH=$HOME/dotnet:$PATH" >> ~/.bashrc
-
-      - sudo yum install -y icu
-      - echo "Verifying installed .NET SDKs"
-      - dotnet --list-sdks
+    runtime-versions:
+      dotnet: 9.0
+    commands:    
       - echo "Current .NET version:"
       - dotnet --version
   pre_build:
@@ -45,7 +20,7 @@ phases:
   post_build:
     commands:
       - echo "Post build phase"
-      - dotnet publish **/CarPriceConsole.csproj -c Release -o ./publish --no-build
+      - dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build
 
 artifacts:
   files:
