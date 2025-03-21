@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Build the app from source
+dotnet publish /var/www/carpricecalc/CarPriceApi.csproj -c Release -o /var/www/carpricecalc/publish
+
 # Create the systemd service file for Kestrel
 cat <<EOF > /etc/systemd/system/kestrel-carpricecalc.service
 [Unit]
@@ -7,7 +11,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/var/www/carpricecalc
-ExecStart=/usr/bin/dotnet /var/www/carpricecalc/CarPriceConsole.dll
+ExecStart=/root/.dotnet/dotnet /var/www/carpricecalc/CarPriceApi.dll
 Restart=always
 RestartSec=10
 SyslogIdentifier=carpricecalc
@@ -18,8 +22,6 @@ Environment=ASPNETCORE_ENVIRONMENT=Production
 WantedBy=multi-user.target
 EOF
 
-# Reload systemd to pick up the new service file
+# Reload systemd and enable the service
 systemctl daemon-reload
-
-# Enable the service to start on boot
 systemctl enable kestrel-carpricecalc.service
