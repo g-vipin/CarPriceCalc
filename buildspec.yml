@@ -3,9 +3,14 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      dotnet: 9.0
+      dotnet: 9.0.x
     commands:    
-      - echo "Current .NET version:"
+      - echo "Installing the latest .NET 9.0 from the 9.0 channel"
+      - wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+      - chmod +x dotnet-install.sh
+      - ./dotnet-install.sh --channel 9.0  --install-dir $HOME/.dotnet
+      - export PATH="$HOME/.dotnet:$PATH"
+      - export DOTNET_ROOT="$HOME/.dotnet"
       - dotnet --version
   pre_build:
     commands:
@@ -21,7 +26,6 @@ phases:
     commands:
       - echo "Post build phase"
       - dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build
-
 artifacts:
   files:
     - '**/*'
