@@ -1,32 +1,32 @@
 version: 0.2
 
-env:
-  variables:
-    PATH: "$HOME/.dotnet:$PATH"
-    DOTNET_ROOT: "$HOME/.dotnet"
-
 phases:
   install:
     commands:
+      - command -v curl || apt-get update && apt-get install -y curl
       - echo "Installing the latest .NET 9.0 from the 9.0 channel"
-      - wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh
+      - curl -sSL https://dot.net/v1/dotnet-install.sh -o dotnet-install.sh
       - chmod +x dotnet-install.sh
       - ./dotnet-install.sh --channel 9.0 --install-dir "$HOME/.dotnet"
-      - "$HOME/.dotnet/dotnet --version"  
+      - export PATH="$HOME/.dotnet:$PATH"
+      - dotnet --version  
   pre_build:
     commands:
+      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Restore phase"
-      - "$HOME/.dotnet/dotnet restore"
+      - dotnet restore
   build:
     commands:
+      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Build phase"
-      - "$HOME/.dotnet/dotnet build -c Release"
+      - dotnet build -c Release
       - echo "Test phase"
-      - "$HOME/.dotnet/dotnet test **/CarPriceApi.Tests.csproj --no-build"
+      - dotnet test **/CarPriceApi.Tests.csproj --no-build
   post_build:
     commands:
+      - export PATH="$HOME/.dotnet:$PATH"  
       - echo "Post build phase"
-      - "$HOME/.dotnet/dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build"
+      - dotnet publish **/CarPriceApi.csproj -c Release -o ./publish --no-build
 artifacts:
   files:
     - '**/*'
