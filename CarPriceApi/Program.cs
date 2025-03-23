@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<CarPriceApi.Services.ILogger>(provider => new Logger("log_CarPriceCalc.log"));
 builder.Services.AddTransient<CarPriceFactory>();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddHealthChecks();
 builder.Configuration.AddJsonFile("appsettings.api.json", optional: true, reloadOnChange: true)
 .AddJsonFile("appsettings.api.Development.json", optional: true, reloadOnChange: true);
 builder.Services.AddSwaggerGen(c =>
@@ -30,6 +31,7 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+app.MapHealthChecks("/health");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
